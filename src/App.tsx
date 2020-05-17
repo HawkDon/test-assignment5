@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from "react";
+import { Route, Switch, BrowserRouter, Link } from "react-router-dom";
+import { postCustomer } from "./rest";
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Links />
+        <Routes />
+      </BrowserRouter>
+    </>
   );
-}
+};
+// Post Movement
 
+const Links = () => (
+  <ul>
+    <li>
+      <Link to="/addcustomer">Add new customer</Link>
+    </li>
+    <li>
+      <Link to="/getaccount">Find account</Link>
+    </li>
+    <li>
+      <Link to="/getcustomer">Get customer / cpr</Link>
+    </li>
+    <li>
+      <Link to="/getbalance">Get balance</Link>
+    </li>
+    <li>
+      <Link to="/movement">Add new movement to account</Link>
+    </li>
+  </ul>
+);
+const Routes = () => (
+  <Switch>
+    <Route exact path="/">
+      <Home />
+    </Route>
+    <Route exact path="/addcustomer">
+      <AddCustomer />
+    </Route>
+  </Switch>
+);
+
+const Home = () => <>Hello Home</>;
+
+const AddCustomer = () => {
+  const [customer, setCustomer] = React.useState({
+    cpr: "",
+    name: "",
+    bank: undefined,
+    accounts: undefined,
+  });
+  return (
+    <>
+      <input
+        type="text"
+        value={customer.cpr}
+        onChange={(e) => setCustomer({ ...customer, cpr: e.target.value })}
+      />
+      <input
+        type="text"
+        value={customer.name}
+        onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+      />
+      <input
+        type="submit"
+        value="add customer!"
+        onClick={() => postCustomer(customer).then((res) => alert(res))}
+      />
+    </>
+  );
+};
 export default App;
