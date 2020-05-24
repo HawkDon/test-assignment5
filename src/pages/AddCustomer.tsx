@@ -1,20 +1,5 @@
-import React from "react";
-import { Route, Switch, BrowserRouter, Link } from "react-router-dom";
-import { postCustomer } from "./rest";
-import Links from "./Links";
-import Routes from "./Routes";
-const App = () => {
-  return (
-    <>
-      <BrowserRouter>
-        <Links />
-        <Routes />
-      </BrowserRouter>
-    </>
-  );
-};
-
-const Home = () => <>Hello Home</>;
+import * as React from "react";
+import { postCustomer } from "../rest";
 
 const AddCustomer = () => {
   const [customer, setCustomer] = React.useState({
@@ -43,4 +28,5 @@ const AddCustomer = () => {
     </>
   );
 };
-export default App;
+
+export default AddCustomer;
